@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-	private final CompetitorRepository competitorRepository;
+	
+	private final StudentRepository studentRepository;
 
     @Autowired
-    public DatabaseLoader(CompetitorRepository repository) {
-        this.competitorRepository = repository;
+    public DatabaseLoader(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
 	@Override
 	public void run(String... strings) throws Exception {
-		this.competitorRepository.save(new Competitor("อุ้ย","สาสุข"));
-		this.competitorRepository.save(new Competitor("เวนิส","พยาบาล"));
+		
 	}
 }

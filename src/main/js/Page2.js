@@ -9,11 +9,9 @@ export default class Page2 extends React.Component{
 constructor(){
   super();
   this.state={
-    name:"No name",
-    detail:"PO-001",
-    status:"on sell"
+    firstName:'',
+    lastName:''
   }
-
 }
 popPage() {
         this.props.navigator.popPage();
@@ -21,16 +19,27 @@ popPage() {
 //default function woking  on renderpage
 componentDidMount(){
   //wording on render page
-  this.setState({name:"hello kitty"});
-  client({method: 'GET', path: '/vote'}).done(response => {
-    // this.setState({employees: response.entity._embedded.employees});
-    console.log(response)
+  // client({method: 'GET', path: '/vote'}).done(response => {
+  //   // this.setState({employees: response.entity._embedded.employees});
+  //   console.log(response)
+  // });
+}
+
+handleUsernameChange(event){
+  const target = event.target;
+  const value = target.type === 'checkbox' ? target.checked : target.value;
+  const name = target.name;
+
+  this.setState({
+    [name]: value
   });
 }
-handleSubmit(){
-  client({method: 'GET', path: '/vote/'+id+'/point/'+point}).done(
-    ons.notification.alert('Voted!')
-    )
+handleClick(e){
+  // /firstname/{firstname}/lastname/{lastname}
+  const  { firstName,lastName} = this.state
+  client({method: 'GET', path:`firstname/${firstName.trim()}/lastname/${lastName.trim()}` }).done(res=>{
+        console.log(res) // res form server
+  })
 }
 renderToolbar(route, navigator){
         //back button
@@ -52,10 +61,27 @@ renderToolbar(route, navigator){
       return (
         <Ons.Page renderToolbar={this.renderToolbar.bind(this)} >
           <div style={{ textAlign: 'center' }}>
-            <h1>Page 2: {this.props.title}</h1>
-            noon: {this.state.name}
-            detail:{this.state.detail}
-            status: {this.state.status}
+          <p>
+            <Ons.Input
+              value={this.state.firstName}
+              onChange={this.handleUsernameChange.bind(this)}
+              modifier='underbar'
+              float
+              name="firstName"
+              placeholder='first Name' />
+          </p>
+          <p>
+            <Ons.Input
+              value={this.state.lastName}
+              onChange={this.handleUsernameChange.bind(this)}
+              modifier='underbar'
+              float
+              name="lastName"
+              placeholder='last Name' />
+          </p>
+          <p>
+            <Ons.Button onClick={this.handleClick.bind(this)}>Insert Data</Ons.Button>
+          </p>
           </div>
         </Ons.Page>
       );
