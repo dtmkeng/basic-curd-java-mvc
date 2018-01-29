@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="student")
+@Table(name="student")// name table in database 
 public class Student {
 
     @Id
@@ -18,10 +18,17 @@ public class Student {
     private String firstName;
 	private String lastName;
 
-	private Student() {}
+	private Student() {
+    }
 
 	public Student(String firstName, String lastName) {
          this.firstName =firstName;
          this.lastName=lastName;
-	}
+    }
+    public void setFirstName(String firstname){
+        this.firstName=firstname;
+    }
+    public void setLastName(String lastname){
+        this.lastName=lastname;
+    }
 }

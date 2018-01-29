@@ -10,7 +10,8 @@ constructor(){
   super();
   this.state={
     firstName:'',
-    lastName:''
+    lastName:'',
+    data:[]
   }
 }
 popPage() {
@@ -19,10 +20,20 @@ popPage() {
 //default function woking  on renderpage
 componentDidMount(){
   //wording on render page
-  // client({method: 'GET', path: '/vote'}).done(response => {
-  //   // this.setState({employees: response.entity._embedded.employees});
-  //   console.log(response)
-  // });
+  let data=[];
+  client({method: 'GET', path: '/student'}).done(response => {
+    // this.setState({employees: response.entity._embedded.employees});
+    console.log(response)
+    let res = response.entity;
+    if(res.length>0){
+    res.forEach(shot => {
+        // console.log(shot.firstName)
+        data.push({firstName:shot.firstName,
+                   lastName:shot.lastName })
+    });
+    this.setState({data:data})
+  } 
+  });
 }
 
 handleUsernameChange(event){
@@ -37,8 +48,23 @@ handleUsernameChange(event){
 handleClick(e){
   // /firstname/{firstname}/lastname/{lastname}
   const  { firstName,lastName} = this.state
+  let data=[]
   client({method: 'GET', path:`firstname/${firstName.trim()}/lastname/${lastName.trim()}` }).done(res=>{
         console.log(res) // res form server
+        ons.notification.alert(res.entity.status)
+        client({method: 'GET', path: '/student'}).done(response => {
+          // this.setState({employees: response.entity._embedded.employees});
+          console.log(response)
+          let res = response.entity;
+          if(res.length>0){
+          res.forEach(shot => {
+              // console.log(shot.firstName)
+              data.push({firstName:shot.firstName,
+                         lastName:shot.lastName })
+          })
+              this.setState({data:data})
+        } 
+        })
   })
 }
 renderToolbar(route, navigator){
@@ -58,6 +84,11 @@ renderToolbar(route, navigator){
       }
     render() {
       //console.log(this.props)
+      //console.log(this.state.data)
+      const { data}=this.state
+      const list = data.map((data,dataid)=>{
+        return <div key={dataid}>{data.firstName}</div>
+      }) 
       return (
         <Ons.Page renderToolbar={this.renderToolbar.bind(this)} >
           <div style={{ textAlign: 'center' }}>
@@ -82,6 +113,10 @@ renderToolbar(route, navigator){
           <p>
             <Ons.Button onClick={this.handleClick.bind(this)}>Insert Data</Ons.Button>
           </p>
+          <Ons.List
+              dataSource={this.state.data}
+              renderRow={(row) => <Ons.ListItem>{row.firstName}</Ons.ListItem>}
+          />
           </div>
         </Ons.Page>
       );

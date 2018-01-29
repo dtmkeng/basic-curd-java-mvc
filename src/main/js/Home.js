@@ -4,6 +4,8 @@ var ons = require('onsenui');
 var Ons = require('react-onsenui');
 var client = require('./client');
 import Page2 from './Page2'
+import Updata from './Updata'
+import Delete from './Delete'
 export default class Home extends React.Component{
   constructor(){
     super();
@@ -11,9 +13,9 @@ export default class Home extends React.Component{
       value:"Team00"
     }
   }
-pushPage() {
+pushPage(Page) {
     let title="Helle World"
-    this.props.navigator.pushPage({ component: Page2, props: { key: 'Page2' ,title:this.state.value} });
+    this.props.navigator.pushPage({ component: Page, props: { key: `${Page}` ,title:this.state.value} });
   }
   renderToolbar(route, navigator){
     return (
@@ -32,7 +34,9 @@ pushPage() {
         <Ons.Page renderToolbar={this.renderToolbar.bind(this)}>
           <div style={{ textAlign: 'center' }}>
              <h1>Home</h1>
-             <Ons.Button onClick={this.pushPage.bind(this)}>Page</Ons.Button>
+             <Ons.Button onClick={this.pushPage.bind(this,Page2)}>Insert Data</Ons.Button>
+             <Ons.Button onClick={this.pushPage.bind(this,Updata)}>Updata Data</Ons.Button>
+             <Ons.Button onClick={this.pushPage.bind(this,Delete)}>Delete Data</Ons.Button>
           </div>
         </Ons.Page>
       );
