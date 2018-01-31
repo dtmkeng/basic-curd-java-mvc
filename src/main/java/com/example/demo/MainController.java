@@ -31,7 +31,6 @@ public class MainController {
                 return "{\"status\":\"save dataed!\"}";
                 
     }
-
     @ResponseBody
     @RequestMapping(path = "/firstname/{firstname}/lastname/{lastname}", method = RequestMethod.PUT)
     public String UpdataData(@PathVariable String firstname,@PathVariable String lastname){

@@ -5,7 +5,8 @@
 git clone https://github.com/dtmkeng/basic-curd-java-mvc.git
 ```
 and run 
-```
+``` 
+    cd react-boot-demosa2
     gradlew bootrun  
 ```
 
